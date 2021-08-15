@@ -1,0 +1,32 @@
+.game-display{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 97vh;
+    align-items: center;
+}
+
+.gameboard{
+    border-style: solid;
+    border-color: black;
+    height: 500px;
+    width: 500px;
+}
+
+.game-grid{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gridbox{
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-color: black;
+    height: 161.66px;
+    width: 161.66px;
+    font-size: 100px;
+}
