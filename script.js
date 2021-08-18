@@ -6,11 +6,13 @@ const game = (()=> {
 
         const addMove = (index, playerSymbol) => {
             if (gameboardArray[index] === null){
+                console.log(gameboardArray)
                 gameboardArray.splice(index, 1, playerSymbol);
-                displayController.render(); 
                 displayController.endTurn();
+                displayController.render(); 
             }
         }
+
         return {addMove, gameboardArray}
     })();
 
@@ -28,29 +30,69 @@ const game = (()=> {
     const displayController = (()=> {
         const player1 = Player(1);
         const player2 = Player(2);
+        const gboardarr = gameBoard.gameboardArray;
+        let binded = false; 
+        let currentTurn;
+
         const startGame = () => {
-            render();
-            bindEvents();
+            if(!binded){
+                bindEvents();
+            }
         }
 
-        let currentTurn = player1;
+        const checkForWin = () => {
+            for(let i=0;i<=gboardarr.length;i++){
+                if(!(gboardarr[i] == null)){
+                    if(i==0 || i==3 || i==6){
+                        if( gboardarr[i]==gboardarr[i+1] && 
+                            gboardarr[i+1]==gboardarr[i+2]){
+                            console.log(currentTurn.getPlayerNum())
+                        }
+                    }
+                    if(i==0 || i==1 || i==2){
+                        if(gboardarr[i] == gboardarr[i+3] &&
+                            gboardarr[i+3] == gboardarr[i+6]){
+                                console.log(currentTurn.getPlayerNum())
+                            }
+                    }
+                }
+                if(i == 4 && !(gboardarr[i] ==null) && !(gboardarr[0] == null)
+                    && !(gboardarr[2]== null)){
+                    if(gboardarr[0] == gboardarr[8]
+                        || gboardarr[2] == gboardarr[6]){
+                        console.log(currentTurn.getPlayerNum())
+                    }
+                }
+
+            }
+        }
+
+        const win = (playerNum) => {
+            
+        }
+
 
         const endTurn = () => {
             if (currentTurn == player1){
                 currentTurn = player2;
+                console.log(currentTurn.getPlayerNum())
             }
             else{
                 currentTurn = player1;
+                console.log(currentTurn.getPlayerNum())
             }
         }
 
         const render = () => {
+            checkForWin();
             for(let i=1; i<=gameBoard.gameboardArray.length; i++){
                 gridboxes[i-1].textContent = gameBoard.gameboardArray[i-1];
             }
         }
 
         const bindEvents = () => {
+            console.log('abc')
+            binded = true;
             for(let i = 0; i < gridboxes.length; i++){
                 gridboxes[i].addEventListener('click', playerTurn.bind(null, i));
             }
@@ -64,9 +106,7 @@ const game = (()=> {
                 player2.makeMove(i);
             }
         }
-        return {startGame, endTurn, render}
+        return {currentTurn,startGame, endTurn, render}
     })();
-
     displayController.startGame();
-
 })();
