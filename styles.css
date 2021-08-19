@@ -10,8 +10,8 @@
 .gameboard{
     border-style: solid;
     border-color: black;
-    height: 500px;
-    width: 500px;
+    height: 764px;
+    width: 764px;
 }
 
 .game-grid{
@@ -27,19 +27,16 @@
     align-items: center;
     border-style: solid;
     border-color: black;
-    height: 161.66px;
-    width: 161.66px;
-    font-size: 100px;
+    height: 250px;
+    width: 250px;
+    font-size: 150px;
 }
 
 #win-message{
-    font-size: 50px;
-}
-
-.win-message-flex{
-    display: flex;
-    justify-content: center;
-    height: 95%;
-    align-items: center;
-    z-index: 100;
+    text-align: center;
+    font-size: 150px;
+    position: fixed;
+    top: 50%;   
+    left: 50%; 
+    transform: translate(-50%, -50%);
 }

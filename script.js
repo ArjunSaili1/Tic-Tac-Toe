@@ -1,5 +1,6 @@
 const game = (()=> {
     const gridboxes = document.querySelectorAll('.gridbox')
+    const winMessage = document.querySelector('#win-message');
     
     const gameBoard = (() => {
         const gameboardArray = [null, null, null, null, null, null, null, null, null];
@@ -11,12 +12,11 @@ const game = (()=> {
                 displayController.render(); 
             }
         }
-
         return {addMove, gameboardArray}
     })();
 
     const Player = ((playerNum) => {
-        const symbol = playerNum == 1 ?  'X' : 'O';
+        const symbol = playerNum == 1 ?  'O' : 'X';
         const getPlayerNum = () => playerNum;
         const getSymbol = () => symbol;
         const makeMove = (index) => {
@@ -40,38 +40,41 @@ const game = (()=> {
         }
 
         const checkForWin = () => {
+            if((!(gboardarr[4] == null)) && (((!(gboardarr[0]==null)) && (!(gboardarr[8]==null)))
+            || ((!(gboardarr[2]==null)) && (!(gboardarr[6]==null))))){
+                if((gboardarr[4] == gboardarr[2] && gboardarr[2]==gboardarr[6])){
+                    win(currentTurn.getSymbol());
+                }
+                if(gboardarr[4] == gboardarr[0] && gboardarr[0] == gboardarr[8]){
+                    win(currentTurn.getSymbol());
+                }
+            }
             for(let i=0;i<=gboardarr.length;i++){
                 if(!(gboardarr[i] == null)){
                     if(i==0 || i==3 || i==6){
                         if( gboardarr[i]==gboardarr[i+1] && 
                             gboardarr[i+1]==gboardarr[i+2]){
-                            console.log(currentTurn.getPlayerNum())
-                        }
+                                win(currentTurn.getSymbol())
+                            }
                     }
                     if(i==0 || i==1 || i==2){
                         if(gboardarr[i] == gboardarr[i+3] &&
                             gboardarr[i+3] == gboardarr[i+6]){
-                                console.log(currentTurn.getPlayerNum())
+                                win(currentTurn.getSymbol())
                             }
                     }
                 }
-                if(i == 4 && !(gboardarr[i] ==null) && !(gboardarr[0] == null)
-                    && !(gboardarr[2]== null)){
-                    if(gboardarr[0] == gboardarr[8]
-                        || gboardarr[2] == gboardarr[6]){
-                        console.log(currentTurn.getPlayerNum())
-                    }
-                }
-
             }
         }
 
         const win = (playerNum) => {
+            winMessage.textContent =  `Player ${playerNum} wins!`;
             
         }
 
 
         const endTurn = () => {
+            checkForWin();
             if (currentTurn == player1){
                 currentTurn = player2;
             }
@@ -81,7 +84,6 @@ const game = (()=> {
         }
 
         const render = () => {
-            checkForWin();
             for(let i=1; i<=gameBoard.gameboardArray.length; i++){
                 gridboxes[i-1].textContent = gameBoard.gameboardArray[i-1];
             }
