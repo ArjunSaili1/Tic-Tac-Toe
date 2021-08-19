@@ -6,7 +6,6 @@ const game = (()=> {
 
         const addMove = (index, playerSymbol) => {
             if (gameboardArray[index] === null){
-                console.log(gameboardArray)
                 gameboardArray.splice(index, 1, playerSymbol);
                 displayController.endTurn();
                 displayController.render(); 
@@ -75,11 +74,9 @@ const game = (()=> {
         const endTurn = () => {
             if (currentTurn == player1){
                 currentTurn = player2;
-                console.log(currentTurn.getPlayerNum())
             }
             else{
                 currentTurn = player1;
-                console.log(currentTurn.getPlayerNum())
             }
         }
 
@@ -91,7 +88,6 @@ const game = (()=> {
         }
 
         const bindEvents = () => {
-            console.log('abc')
             binded = true;
             for(let i = 0; i < gridboxes.length; i++){
                 gridboxes[i].addEventListener('click', playerTurn.bind(null, i));
