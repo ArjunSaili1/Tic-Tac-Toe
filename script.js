@@ -1,6 +1,7 @@
 const game = (()=> {
     const gridboxes = document.querySelectorAll('.gridbox')
     const winMessage = document.querySelector('#win-message');
+    const winModal = document.querySelectorAll('.win');
     
     const gameBoard = (() => {
         const gameboardArray = [null, null, null, null, null, null, null, null, null];
@@ -29,6 +30,7 @@ const game = (()=> {
     const displayController = (()=> {
         const player1 = Player(1);
         const player2 = Player(2);
+        const blur = document.querySelector('#blur');
         const gboardarr = gameBoard.gameboardArray;
         let binded = false; 
         let currentTurn;
@@ -65,13 +67,22 @@ const game = (()=> {
                     }
                 }
             }
+            let tieCheck = gboardarr.filter(elm => !(elm == null))
+            if(gboardarr.length == tieCheck.length){
+                win();
+            }
+
         }
 
         const win = (playerNum) => {
-            winMessage.textContent =  `Player ${playerNum} wins!`;
-            
+            winModal.forEach(element => element.style.display = 'unset');
+            if(playerNum){
+                winMessage.textContent =  `Player ${playerNum} wins!`;
+            }
+            else{
+                winMessage.textContent =  "It's a tie!";
+            }
         }
-
 
         const endTurn = () => {
             checkForWin();

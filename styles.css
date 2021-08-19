@@ -1,42 +1,99 @@
+#background{
+    background-color: rgb(23, 24, 46);
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
 .game-display{
+    z-index: 2;
     display: flex;
     justify-content: center;
     width: 100%;
     height: 97vh;
     align-items: center;
-    z-index: 2;
-}
-
-.gameboard{
-    border-style: solid;
-    border-color: black;
-    height: 764px;
-    width: 764px;
+    z-index: 4;
 }
 
 .game-grid{
+    z-index: inherit;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+#blur{
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(175, 179, 255, 0.15);
+    filter: blur(10px);
+    z-index: 10;
+}
+
 .gridbox{
+    z-index: inherit;
     font-family: 'Raleway', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     border-style: solid;
-    border-color: black;
-    height: 250px;
-    width: 250px;
-    font-size: 150px;
+    border-color: white;
+    height: 150px;
+    width: 150px;
+    font-size: 120px;
+}
+
+#gameboard{
+    background-color: rgb(34,35,69);
+    height: 705px;
+    width: 700px;
+    z-index: 3;
+}
+
+.center-items{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #win-message{
+    width: 270px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    z-index: 8;
     text-align: center;
-    font-size: 150px;
+    font-size: 60px;
+}
+
+#win-box{
+    background-color: white;
+    height: 400px;
+    width: 400px;
+    z-index: 6;
+    box-shadow: 0px 4px 8px 6px rgba(0,0,0,0.25);
+}
+
+#win-box-circle{
     position: fixed;
-    top: 50%;   
-    left: 50%; 
-    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -175%);
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0px 4px 8px 6px rgba(0,0,0,0.15);
+    height: 150px;
+    width: 150px;
+    z-index: 7;
+}
+
+#circle-text{
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    font-size: 90px;
+    font-weight: bold;
+}
+
+.win{
+    display: none;
 }
