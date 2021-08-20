@@ -2,18 +2,68 @@ const game = (()=> {
     const gridboxes = document.querySelectorAll('.gridbox')
     const winMessage = document.querySelector('#win-message');
     const winModal = document.querySelectorAll('.win');
+    const circletext = document.querySelector('#circle-text');
     
     const gameBoard = (() => {
-        const gameboardArray = [null, null, null, null, null, null, null, null, null];
-
+        const gameboardArray = new Array(9).fill(null);
         const addMove = (index, playerSymbol) => {
             if (gameboardArray[index] === null){
                 gameboardArray.splice(index, 1, playerSymbol);
                 displayController.endTurn();
                 displayController.render(); 
             }
+            console.log(gameboardArray)
         }
-        return {addMove, gameboardArray}
+
+        const getBoard = () => {return gameboardArray}
+
+        const checkForWin = () => {
+            if((!(gameboardArray[4] == null)) && (((!(gameboardArray[0]==null)) && (!(gameboardArray[8]==null)))
+            || ((!(gameboardArray[2]==null)) && (!(gameboardArray[6]==null))))){
+                if((gameboardArray[4] == gameboardArray[2] && gameboardArray[2]==gameboardArray[6])){
+                    //win(currentTurn.getSymbol());
+                    return true
+                }
+                if(gameboardArray[4] == gameboardArray[0] && gameboardArray[0] == gameboardArray[8]){
+                    //win(currentTurn.getSymbol());
+                    return true;
+                }
+            }
+            for(let i=0;i<=gameboardArray.length;i++){
+                if(!(gameboardArray[i] == null)){
+                    if(i==0 || i==3 || i==6){
+                        if( gameboardArray[i]==gameboardArray[i+1] && 
+                            gameboardArray[i+1]==gameboardArray[i+2]){
+                                //win(currentTurn.getSymbol())
+                                return true;
+                            }
+                    }
+                    if(i==0 || i==1 || i==2){
+                        if(gameboardArray[i] == gameboardArray[i+3] &&
+                            gameboardArray[i+3] == gameboardArray[i+6]){
+                                //win(currentTurn.getSymbol())
+                                return true;
+                            }
+                    }
+                }
+            }
+        }
+
+        const checkForTie = () => {
+            let tieCheck = gameboardArray.filter(elm => !(elm == null))
+            if(gameboardArray.length == tieCheck.length){
+                return true;
+            }
+        }
+
+        const resetBoard = () => {gameboardArray.fill(null);
+                                displayController.render();
+                                winModal.forEach(element => element.style.display = 'none');
+                                winMessage.textContent =  '';
+                                circletext.textContent = '';
+                            }
+        
+        return {getBoard, resetBoard, addMove, checkForWin, checkForTie}
     })();
 
     const Player = ((playerNum) => {
@@ -30,8 +80,6 @@ const game = (()=> {
     const displayController = (()=> {
         const player1 = Player(1);
         const player2 = Player(2);
-        const blur = document.querySelector('#blur');
-        const gboardarr = gameBoard.gameboardArray;
         let binded = false; 
         let currentTurn;
 
@@ -41,51 +89,28 @@ const game = (()=> {
             }
         }
 
-        const checkForWin = () => {
-            if((!(gboardarr[4] == null)) && (((!(gboardarr[0]==null)) && (!(gboardarr[8]==null)))
-            || ((!(gboardarr[2]==null)) && (!(gboardarr[6]==null))))){
-                if((gboardarr[4] == gboardarr[2] && gboardarr[2]==gboardarr[6])){
-                    win(currentTurn.getSymbol());
-                }
-                if(gboardarr[4] == gboardarr[0] && gboardarr[0] == gboardarr[8]){
-                    win(currentTurn.getSymbol());
-                }
-            }
-            for(let i=0;i<=gboardarr.length;i++){
-                if(!(gboardarr[i] == null)){
-                    if(i==0 || i==3 || i==6){
-                        if( gboardarr[i]==gboardarr[i+1] && 
-                            gboardarr[i+1]==gboardarr[i+2]){
-                                win(currentTurn.getSymbol())
-                            }
-                    }
-                    if(i==0 || i==1 || i==2){
-                        if(gboardarr[i] == gboardarr[i+3] &&
-                            gboardarr[i+3] == gboardarr[i+6]){
-                                win(currentTurn.getSymbol())
-                            }
-                    }
-                }
-            }
-            let tieCheck = gboardarr.filter(elm => !(elm == null))
-            if(gboardarr.length == tieCheck.length){
-                win();
-            }
-
-        }
-
         const win = (playerNum) => {
+            const reset = document.querySelector('#reset');
             winModal.forEach(element => element.style.display = 'unset');
+            reset.addEventListener('click', gameBoard.resetBoard.bind(null, reset));
             if(playerNum){
                 winMessage.textContent =  `Player ${playerNum} wins!`;
+                circletext.textContent = `${playerNum}`;
             }
             else{
                 winMessage.textContent =  "It's a tie!";
+                circletext.textContent = "XO"
+                circletext.style.fontSize = '70px';
             }
         }
 
         const endTurn = () => {
-            checkForWin();
+            if(gameBoard.checkForWin()){
+                win(currentTurn.getSymbol());
+            }
+            else if(gameBoard.checkForTie()){
+                win();
+            }            
             if (currentTurn == player1){
                 currentTurn = player2;
             }
@@ -95,8 +120,8 @@ const game = (()=> {
         }
 
         const render = () => {
-            for(let i=1; i<=gameBoard.gameboardArray.length; i++){
-                gridboxes[i-1].textContent = gameBoard.gameboardArray[i-1];
+            for(let i=1; i<=gameBoard.getBoard().length; i++){
+                gridboxes[i-1].textContent = gameBoard.getBoard()[i-1];
             }
         }
 
