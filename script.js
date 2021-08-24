@@ -2,7 +2,17 @@ const game = (()=> {
     const gridboxes = document.querySelectorAll('.gridbox')
     const winMessage = document.querySelector('#win-message');
     const winModal = document.querySelectorAll('.win');
+    const playButton = document.querySelector('#play');
     const circletext = document.querySelector('#circle-text');
+    const startModal = document.querySelector('#start-box');
+    const reset = document.querySelector('#reset');
+    const blur = document.querySelector('#blur');
+    const startModalText = document.querySelector('#start-modal-text');
+    const cancelButton = document.querySelector('#cancel');
+    const playerOneNameField = document.querySelector('#player-one');
+    const playerTwoNameField = document.querySelector('#player-two');
+    const form = document.querySelector('#game-form');
+
     
     const gameBoard = (() => {
         const gameboardArray = new Array(9).fill(null);
@@ -12,7 +22,6 @@ const game = (()=> {
                 displayController.endTurn();
                 displayController.render(); 
             }
-            console.log(gameboardArray)
         }
 
         const getBoard = () => {return gameboardArray}
@@ -20,12 +29,10 @@ const game = (()=> {
         const checkForWin = () => {
             if((!(gameboardArray[4] == null)) && (((!(gameboardArray[0]==null)) && (!(gameboardArray[8]==null)))
             || ((!(gameboardArray[2]==null)) && (!(gameboardArray[6]==null))))){
-                if((gameboardArray[4] == gameboardArray[2] && gameboardArray[2]==gameboardArray[6])){
-                    //win(currentTurn.getSymbol());
+                if(gameboardArray[4] == gameboardArray[2] && gameboardArray[2]==gameboardArray[6]){
                     return true
                 }
                 if(gameboardArray[4] == gameboardArray[0] && gameboardArray[0] == gameboardArray[8]){
-                    //win(currentTurn.getSymbol());
                     return true;
                 }
             }
@@ -62,40 +69,60 @@ const game = (()=> {
                                 winMessage.textContent =  '';
                                 circletext.textContent = '';
                             }
-        
+
         return {getBoard, resetBoard, addMove, checkForWin, checkForTie}
     })();
 
-    const Player = ((playerNum) => {
-        const symbol = playerNum == 1 ?  'O' : 'X';
-        const getPlayerNum = () => playerNum;
+    const Player = ((playerNum, name) => {
+        let playerName = name;
+        const symbol = playerNum == 1 ?  'X' : 'O';
         const getSymbol = () => symbol;
         const makeMove = (index) => {
             gameBoard.addMove(index, symbol);
         }
+        const getPlayerName = () => playerName;
+        const setPlayerName = (newName) => {playerName = newName};
 
-        return {makeMove, getSymbol, getPlayerNum}
+        return {getPlayerName, setPlayerName, makeMove, getSymbol}
     });
 
     const displayController = (()=> {
-        const player1 = Player(1);
-        const player2 = Player(2);
+        const player1 = Player(1, '');
+        const player2 = Player(2, '');
         let binded = false; 
-        let currentTurn;
+        let currentTurn = player1;
 
         const startGame = () => {
-            if(!binded){
-                bindEvents();
-            }
+            startModal.style.display = 'unset';
+            startModalText.style.display ='unset';
+            blur.style.display = 'unset';
+            startModal.classList.add('scale-up-center');
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                player1.setPlayerName(playerOneNameField.value);
+                player2.setPlayerName(playerTwoNameField.value);
+                startModalText.style.display = 'none';
+                startModal.style.display = 'none';
+                blur.style.display = 'none';
+                playButton.style.display = 'none'
+                if(!binded){
+                    bindEvents();
+                }
+            })
+            cancelButton.addEventListener('click', function(){
+                startModal.classList.remove('scale-up-center')
+                startModalText.style.display = 'none';
+                startModal.style.display = 'none';
+                blur.style.display = 'none';
+            })
         }
 
-        const win = (playerNum) => {
-            const reset = document.querySelector('#reset');
+        const win = (playerName, symbol) => {
             winModal.forEach(element => element.style.display = 'unset');
             reset.addEventListener('click', gameBoard.resetBoard.bind(null, reset));
-            if(playerNum){
-                winMessage.textContent =  `Player ${playerNum} wins!`;
-                circletext.textContent = `${playerNum}`;
+            if(playerName){
+                winMessage.textContent =  `${playerName} wins!`;
+                circletext.textContent = `${symbol}`;
             }
             else{
                 winMessage.textContent =  "It's a tie!";
@@ -106,7 +133,7 @@ const game = (()=> {
 
         const endTurn = () => {
             if(gameBoard.checkForWin()){
-                win(currentTurn.getSymbol());
+                win(currentTurn.getPlayerName(), currentTurn.getSymbol());
             }
             else if(gameBoard.checkForTie()){
                 win();
@@ -133,14 +160,14 @@ const game = (()=> {
         }
 
         const playerTurn = (i) => {
-            if (currentTurn == player1){
-                player1.makeMove(i);
+            if (currentTurn == player2){
+                player2.makeMove(i);
             }
             else{
-                player2.makeMove(i);
+                player1.makeMove(i);
             }
         }
         return {currentTurn,startGame, endTurn, render}
     })();
-    displayController.startGame();
+    playButton.addEventListener('click', displayController.startGame);
 })();
