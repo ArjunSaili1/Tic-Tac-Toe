@@ -15,9 +15,7 @@
     <div class='center-items' id='gameboard'></div>
     <div class='center-items win' id='win-message'></div>
     <div class='center-items win' id='blur'></div>
-    <button class='center-items' id='play'>Play</button>
-    <div class='center-items' id='start-box'></div>'
-    <div id='start-modal-text'>
+    <div class='center-items' id='start-box'>
         <form id='game-form'>
             <div class='center-items start-box-text' id='start-box-title'>Welcome to Tic-Tac-Toe!</div>
             <div class="center-items start-box-text" id='to-start-text'>To start, enter the name of each player</div>
@@ -25,9 +23,11 @@
             <input class='center-items start-box-text player-names' id='player-one' type="text" required />
             <div class='center-items start-box-text player-text' id='player-two-name-text'>Player Two Name (O)</div>
             <input class='center-items start-box-text player-names' id='player-two' type="text" required />
-            <button class='center-items start-box-text start-box-buttons' id='cancel'>Cancel</button>
+            <button type='button' class='center-items start-box-text start-box-buttons' id='cancel'>Cancel</button>
             <button type='submit' class='center-items start-box-text start-box-buttons' id='start'>Start</button>
         </form>
+    </div>'
+    <div id='start-modal-text'>
     </div>
     <div class="center-items win" id='win-box'><button class='center-items' id='reset'>Reset</button></div>
     <div id='win-box-circle' class='win'><div class='center-items win' id='circle-text'></div></div>
@@ -37,7 +37,11 @@
             <div class='gridbox' id='box-2'></div>
             <div class='gridbox' id='box-3'></div>
             <div class='gridbox' id='box-4'></div>
-            <div class='gridbox' id='box-5'></div>
+            <div class='gridbox' id='box-5'>
+                <div class='play-button'>
+                    <button id='play'>Play</button>
+                </div>
+            </div>
             <div class='gridbox' id='box-6'></div>
             <div class='gridbox' id='box-7'></div>
             <div class='gridbox' id='box-8'></div>

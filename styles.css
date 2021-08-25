@@ -113,35 +113,30 @@ button{
 }
 
 #play{
-    font-size: 60px;
-    height: 140px;
-    width: 140px;
+    font-size: 50px;
+    height: 130px;
+    width: 130px;
     border-radius: 50%;
     z-index: 24;
+}
+
+.play-button{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #play:hover{
     background-color:#e0e052;
 }
 
-.scale-up-center {
-	animation: scale-up-center 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-}
-
-@keyframes scale-up-center {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(600);
-    }
-  }
-
 #start-box{
     display: none;
     background-color: white;
-    height: 1px;
-    width: 1px;
+    height: 50vh;
+    width: 30vmax;
     z-index: 25;
 }
 
@@ -156,57 +151,59 @@ button{
 }
 
 #to-start-text{
-    font-size: 30px;
+    font-size: 1.4vmax;
+    text-align: center;
+    width: 95%;
     font-weight: 600;
-    top: 35%;
+    top: 11.5vmin;
 }
 
 #start-box-title{
-    top: 25%;
-    font-size: 50px;
+    font-size: 2.5vmax;
     font-weight: bolder;
-    width: 600px;
+    width: 95%;
     text-align:center;
+    top: 5.6vmin;
 }
 
 .player-names{
     border-style: solid;
     border-color: black;
-    height: 38px;
-    width: 270px;
-    font-size: 20px;
+    height: 3.5vh;
+    width: 20vw;
+    font-size: 2vmin;
     padding-left: 8px;
     text-align: center;
 }
 
 #player-one{
-    top: 48%;
+    top: 22vmin;
 }
 
 #player-one-name-text{
-    top: 42.5%;
+    top: 17vmin;
 }
 
 #player-two-name-text{
-    top: 56%;
+    top: 28vmin;
 }
 
 .player-text{
-    font-size: 25px;
+    font-size: 1.2vmax;
     font-weight: 600;
-    width: 599px;
+    width: 50%;
     text-align:center;
 }
 
 #player-two{
-    top: 61.5%;
+    top: 33vmin;
 }
 
 .start-box-buttons{
-    top: 72%;
-    height: 70px;
-    width: 180px;
-    font-size: 20px;
+    top: 42vmin;
+    height: 6vmin;
+    width: 10vmax;
+    font-size: 1.5vw;
 }
 
 .start-box-buttons:hover{
@@ -214,11 +211,11 @@ button{
 }
 
 #cancel{
-    left: 44%;
+    left: 9vmax;
     background-color: rgb(255, 170, 170);
 }
 
 #start{
-    left: 57%;
+    left: 21vmax;
     background-color: rgb(195, 240, 128);
 }

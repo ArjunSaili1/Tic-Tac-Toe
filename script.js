@@ -96,7 +96,6 @@ const game = (()=> {
             startModal.style.display = 'unset';
             startModalText.style.display ='unset';
             blur.style.display = 'unset';
-            startModal.classList.add('scale-up-center');
             form.addEventListener('submit', function(e){
                 e.preventDefault();
                 player1.setPlayerName(playerOneNameField.value);
@@ -110,7 +109,6 @@ const game = (()=> {
                 }
             })
             cancelButton.addEventListener('click', function(){
-                startModal.classList.remove('scale-up-center')
                 startModalText.style.display = 'none';
                 startModal.style.display = 'none';
                 blur.style.display = 'none';
