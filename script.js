@@ -115,9 +115,13 @@ const game = (()=> {
             })
         }
 
-        const win = (playerName, symbol) => {
+        const win = (playerName, symbol, winSquares) => {
             winModal.forEach(element => element.style.display = 'unset');
             reset.addEventListener('click', gameBoard.resetBoard.bind(null, reset));
+            winSquares.forEach(square => {
+                gridboxes[square].style.backgroundColor = 'rgb(195, 240, 128)';
+                gridboxes[square].style.color = 'black';
+            })
             if(playerName){
                 winMessage.textContent =  `${playerName} wins!`;
                 circletext.textContent = `${symbol}`;
@@ -131,12 +135,8 @@ const game = (()=> {
 
         const endTurn = () => {
             const boardCheck = gameBoard.checkForWin();
-            console.log(boardCheck)
             if(boardCheck[0]){
-                gridboxes[boardCheck[1]].style.backgroundColor = 'rgb(195, 240, 128)';
-                gridboxes[boardCheck[2]].style.backgroundColor = 'rgb(195, 240, 128)';
-                gridboxes[boardCheck[3]].style.backgroundColor = 'rgb(195, 240, 128)';
-                win(currentTurn.getPlayerName(), currentTurn.getSymbol());
+                win(currentTurn.getPlayerName(), currentTurn.getSymbol(), boardCheck.slice(1));
             }
             else if(gameBoard.checkForTie()){
                 win();
