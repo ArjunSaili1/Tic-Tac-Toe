@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 96vh;
+    height: 100%;
     align-items: center;
     z-index: 4;
 }
@@ -38,15 +38,15 @@
     border-style: solid;
     border-color: white;
     background-color: rgba(241, 241, 241,0);
-    height: 150px;
-    width: 150px;
-    font-size: 120px;
+    height: 9.5vmax;
+    width: 9.5vmax;
+    font-size: 7vmax;
 }
 
 #gameboard{
     background-color: rgb(34,35,69);
-    height: 705px;
-    width: 700px;
+    height: 40vw;
+    width: 40vw;
     z-index: 3;
 }
 
