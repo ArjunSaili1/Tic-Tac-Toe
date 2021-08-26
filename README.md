@@ -1,2 +1,3 @@
-# tictactoe
-A tic-tac-toe game created using JavaScript Modules and Factories Functions!
+# Tic-Tac-Toe
+A 2 Player Tic Tac Toe game that uses factory function and modules.
+
