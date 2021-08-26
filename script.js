@@ -30,10 +30,10 @@ const game = (()=> {
             if((!(gameboardArray[4] == null)) && (((!(gameboardArray[0]==null)) && (!(gameboardArray[8]==null)))
             || ((!(gameboardArray[2]==null)) && (!(gameboardArray[6]==null))))){
                 if(gameboardArray[4] == gameboardArray[2] && gameboardArray[2]==gameboardArray[6]){
-                    return true
+                    return [true, 2, 4, 6]
                 }
                 if(gameboardArray[4] == gameboardArray[0] && gameboardArray[0] == gameboardArray[8]){
-                    return true;
+                    return [true, 0, 4, 8];
                 }
             }
             for(let i=0;i<=gameboardArray.length;i++){
@@ -41,19 +41,18 @@ const game = (()=> {
                     if(i==0 || i==3 || i==6){
                         if( gameboardArray[i]==gameboardArray[i+1] && 
                             gameboardArray[i+1]==gameboardArray[i+2]){
-                                //win(currentTurn.getSymbol())
-                                return true;
+                                return [true, i, i+1, i+2]
                             }
                     }
                     if(i==0 || i==1 || i==2){
                         if(gameboardArray[i] == gameboardArray[i+3] &&
                             gameboardArray[i+3] == gameboardArray[i+6]){
-                                //win(currentTurn.getSymbol())
-                                return true;
+                                return [true, i, i+3, i+6];
                             }
                     }
                 }
             }
+            return [false, null, null, null];
         }
 
         const checkForTie = () => {
@@ -68,6 +67,7 @@ const game = (()=> {
                                 winModal.forEach(element => element.style.display = 'none');
                                 winMessage.textContent =  '';
                                 circletext.textContent = '';
+                                gridboxes.forEach(element => {element.style.backgroundColor = 'unset'})
                             }
 
         return {getBoard, resetBoard, addMove, checkForWin, checkForTie}
@@ -130,7 +130,12 @@ const game = (()=> {
         }
 
         const endTurn = () => {
-            if(gameBoard.checkForWin()){
+            const boardCheck = gameBoard.checkForWin();
+            console.log(boardCheck)
+            if(boardCheck[0]){
+                gridboxes[boardCheck[1]].style.backgroundColor = 'rgb(195, 240, 128)';
+                gridboxes[boardCheck[2]].style.backgroundColor = 'rgb(195, 240, 128)';
+                gridboxes[boardCheck[3]].style.backgroundColor = 'rgb(195, 240, 128)';
                 win(currentTurn.getPlayerName(), currentTurn.getSymbol());
             }
             else if(gameBoard.checkForTie()){
